@@ -188,22 +188,31 @@ router.get("api/review/:id", (req, res) => {
 });
 
 // POST review
+// router.post("/postReview", async (req, res) => {
+//   try {
+//     const reviewData = await Review.create(req.body);
+//     // const { user_id, content, rating, strain_id, title, timestamp } = req.body;
+//     res.send(
+//       `
+//       ${title} 
+//       ${rating} 
+//       ${strain_id} 
+//       ${content}
+//       ${user_id}
+//       ${timestamp}
+//       `
+//     );
+//     res.status(200).json(reviewData);
+//       // res.redirect(allReviews)
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
+
 router.post("/postReview", async (req, res) => {
   try {
     const reviewData = await Review.create(req.body);
-    // const { user_id, content, rating, strain_id, title, timestamp } = req.body;
-    res.send(
-      `
-      ${title} 
-      ${rating} 
-      ${strain_id} 
-      ${content}
-      ${user_id}
-      ${timestamp}
-      `
-    );
     res.status(200).json(reviewData);
-      // res.redirect(allReviews)
   } catch (err) {
     res.status(400).json(err);
   }
