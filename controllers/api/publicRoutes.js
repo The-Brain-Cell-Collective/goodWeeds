@@ -21,6 +21,11 @@ router.get("/", (req, res) => {
   return res.render("verifyAge");
 });
 
+// Get strains page
+router.get("/strains", (req, res) => {
+  return res.render("browse");
+})
+
 // POST verify age
 router.post("/verifyAge", (req, res) => {
   const { ageGroup } = req.body;
@@ -33,9 +38,39 @@ router.post("/verifyAge", (req, res) => {
 
 // **** LOGIN ROUTES ****
 // POST login
-router.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  res.redirect('/strains');
+router.post('/login', async (req, res) => {
+  try {
+    const userData = await User.findOne({ where: { email: req.body.user_name } });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password, please try again' });
+        // res.redirect('/login')
+      return;
+    }
+
+    const validPassword = await userData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password, please try again' });
+        // res.redirect('/login')
+      return;
+    }
+
+    res.redirect('/strains')
+    // req.session.save(() => {
+    //   req.session.user_id = userData.id;
+    //   req.session.logged_in = true;
+      
+    //   res.json({ user: userData, message: 'You are now logged in!' });
+    // });
+
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 // **** SIGNUP ROUTES ****
@@ -68,16 +103,10 @@ router.get("/myReviews", (req, res) => {
 // });
 
   router.post('/signup', async (req, res) => {
-    try {
-      const newUserData = await user.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        user_name: req.body.user_name,
-        email: req.body.email,
-        password: req.body.password,
-  
-      });
-      res.status(200).json(newUserData);
+    try{
+      const userData = await User.create(req.body);
+
+      res.status(200).json(userData);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -161,7 +190,7 @@ router.get("api/review/:id", (req, res) => {
 // POST review
 router.post("/postReview", async (req, res) => {
   try {
-    const newReview = await Review.create(req.body);
+    const reviewData = await Review.create(req.body);
     // const { user_id, content, rating, strain_id, title, timestamp } = req.body;
     res.send(
       `
@@ -173,6 +202,7 @@ router.post("/postReview", async (req, res) => {
       ${timestamp}
       `
     );
+    res.status(200).json(reviewData);
       // res.redirect(allReviews)
   } catch (err) {
     res.status(400).json(err);
