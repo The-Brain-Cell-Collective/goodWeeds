@@ -157,6 +157,7 @@ router.get("api/review/:id", (req, res) => {
     .then((review) => res.json(review))
     .catch((error) => res.status(400).json(error));
 });
+
 // POST review
 router.post("/postReview", (req, res) => {
   try {
@@ -198,15 +199,15 @@ router.get("api/favorite/:id", (req, res) => {
 // POST favorite
 router.post("/post-favorite", async (req, res) => {
   try {
-  const newFav =  await Favorites.create(req.body);
-  //  { strain_id, name, positive_effects, negative_effects, type } = req.body;
-    // res.send(
-    // `${strain_id}
-    // ${name}
-    // ${positive_effects}
-    // ${negative_effects}
-    // ${type}`
-  // );
+    const newFav =  await Favorites.create(req.body);
+    // const { id, user_id, strain_id } = req.body;
+    res.send(
+    `
+    ${id}
+    ${user_id}
+    ${strain_id}
+    `
+  );
   res.status(200).json(newFav);
   } catch (err) {
     res.status(400).json(err);
