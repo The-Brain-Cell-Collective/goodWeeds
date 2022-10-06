@@ -14,7 +14,6 @@ async function reviewSubmit(event) {
   console.log(revTitle);
 
   const strainId = Number(document.querySelector('#strains').value);
-  // const strainId = Number(strainTitle);
     console.log(strainId);
 
   const userReview = document.querySelector('#content').value;
@@ -23,10 +22,6 @@ async function reviewSubmit(event) {
   const optionValue = document.querySelector('#strains');
   const optionText = optionValue.options[optionValue.selectedIndex].text;
     console.log(optionText)
-
-  // * Rating Buttons
-  // var btnVal = document.getElementById('#rating').value;
-  // console.log(btnVal);
 
   const response = await fetch(`/reviews`, {
     method: 'POST',
@@ -49,29 +44,5 @@ async function reviewSubmit(event) {
 
 
 }
-
-//* Dropdown for strain IDs
-// Toggle between hiding and showing dropdown content
-// function strainDropdown(){
-//   console.log("pls work hehe", strainDropdown);
-
-//   document.getElementById("myDropdown").classList.toggle("show");
-//   const drop = document.getElementById('myDropdown1').value();
-//   console.log(drop);
-// };
-
-// // Close the dropdown menu if the user clicks outside of it
-// window.onclick = function(event) {
-//   if (!event.target.matches('.dropbtn')) {
-//     var dropdowns = document.getElementsByClassName("dropdown-content");
-//     var i;
-//     for (i = 0; i < dropdowns.length; i++) {
-//       var openDropdown = dropdowns[i];
-//       if (openDropdown.classList.contains('show')) {
-//         openDropdown.classList.remove('show');
-//       }
-//     }
-//   }
-// }
 
 document.querySelector('.postReview').addEventListener('submit', reviewSubmit);

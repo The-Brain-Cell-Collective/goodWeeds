@@ -49,12 +49,12 @@
             <div class="topCard">
                 <h2>{{{review.title}}}</h2>
                 <h3>{{{review.strain_name}}}</h3>
-                <h3>{{{review.user_name}}}</h3>
             {{!-- <h3>{{{review.strain_id}}}</h3> --}}
             </div>
             <div class="bottomCard">
                 <p>{{{review.content}}}</p>
-                <p class="date">{{{review.timestamp}}}</p>
+                {{!-- <p class="date">{{{format_date timestamp}}}</p> --}}
+                <h6 class="date">{{{review.user_name}}}<h6>
             </div>
             </div>
             </div>
